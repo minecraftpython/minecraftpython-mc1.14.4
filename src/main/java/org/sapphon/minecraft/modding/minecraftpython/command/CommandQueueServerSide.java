@@ -1,5 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
+import net.minecraftforge.fml.network.PacketDistributor;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 import org.sapphon.minecraft.modding.minecraftpython.PacketMinecraftPythonClientCommand;
 
@@ -18,7 +19,7 @@ public class CommandQueueServerSide extends CommandQueueAbstract {
 			this.scheduledCommands.add(command);
 		} else if (command instanceof CommandMinecraftPythonClient) {
 			CommandMinecraftPythonClient cast = (CommandMinecraftPythonClient) command;
-			MinecraftPythonMod.clientCommandPacketChannel.sendToAll(new PacketMinecraftPythonClientCommand(
+			MinecraftPythonMod.clientCommandPacketChannel.send(PacketDistributor.PLAYER.noArg(), new PacketMinecraftPythonClientCommand(
 					cast));
 		}
 	}
