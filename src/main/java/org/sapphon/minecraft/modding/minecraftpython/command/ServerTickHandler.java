@@ -1,6 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ServerTickHandler {
