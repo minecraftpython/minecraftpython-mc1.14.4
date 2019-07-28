@@ -41,8 +41,8 @@ public class MinecraftPythonMod {
 	}
 
 	private void createPacketChannels() {
-		serverCommandPacketChannel = ChannelFactory.createChannel("MPServerCommand");
-		clientCommandPacketChannel = ChannelFactory.createChannel("MPClientCommand");
+		serverCommandPacketChannel = ChannelFactory.createChannel("mpservercommand");
+		clientCommandPacketChannel = ChannelFactory.createChannel("mpclientcommand");
 		serverCommandPacketChannel.registerMessage(1,
 				PacketMinecraftPythonServerCommand.class, PacketMinecraftPythonServerCommand::toBytes, PacketMinecraftPythonServerCommand::fromBytes, PacketHandler::onMessage);
 		clientCommandPacketChannel.registerMessage(1,
