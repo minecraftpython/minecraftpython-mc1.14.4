@@ -34,7 +34,7 @@ public class CommandMPTeleport extends CommandMinecraftPythonServer {
 
 	public void doWork(){
 		ServerWorld world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
-		List<PlayerEntity> players = new ArrayList<PlayerEntity>(world.playerEntities);
+		List<PlayerEntity> players = new ArrayList<PlayerEntity>(world.getPlayers());
 		for (PlayerEntity entityPlayerMP : players) {
 			if(entityPlayerMP.getDisplayName().getUnformattedComponentText().equals(teleportingPlayer)){
 				entityPlayerMP.setPositionAndUpdate(x,y,z);

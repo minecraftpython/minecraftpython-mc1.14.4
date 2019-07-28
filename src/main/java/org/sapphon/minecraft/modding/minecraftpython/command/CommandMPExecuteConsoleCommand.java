@@ -5,7 +5,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandNotFoundException;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerEntityMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -58,15 +58,15 @@ public class CommandMPExecuteConsoleCommand extends
 
                 if (i > -1)
                 {
-                    PlayerEntityMP[] aentityplayermp = new PlayerEntityMP[0];
-                    aentityplayermp = EntitySelector.matchEntities(playerObject, astring[i], PlayerEntityMP.class).toArray(aentityplayermp);
+                    ServerPlayerEntity[] aentityplayermp = new ServerPlayerEntity[0];
+                    aentityplayermp = EntitySelector.matchEntities(playerObject, astring[i], ServerPlayerEntity.class).toArray(aentityplayermp);
                     String s2 = astring[i];
-                    PlayerEntityMP[] aentityplayermp1 = aentityplayermp;
+                    ServerPlayerEntity[] aentityplayermp1 = aentityplayermp;
                     int k = aentityplayermp.length;
 
                     for (int l = 0; l < k; ++l)
                     {
-                        PlayerEntityMP entityplayermp = aentityplayermp1[l];
+                        ServerPlayerEntity entityplayermp = aentityplayermp1[l];
                         astring[i] = entityplayermp.getName();
 
                         try
