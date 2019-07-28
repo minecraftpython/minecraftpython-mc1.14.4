@@ -2,13 +2,11 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandNotFoundException;
-import net.minecraft.command.EntitySelector;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.util.text.TranslationTextComponent;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPExecuteConsoleCommand extends
@@ -45,7 +43,7 @@ public class CommandMPExecuteConsoleCommand extends
         String[] astring = commandString.split(" ");
         String s1 = astring[0];
         astring = dropFirstString(astring);
-        ICommand icommand = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager().getCommands().get(s1);
+        ICommand icommand = ServerGetter.getServer().getCommandManager().getCommands().get(s1);
         int i = this.getUsernameIndex(icommand, astring);
         int j = 0;
 
@@ -53,7 +51,7 @@ public class CommandMPExecuteConsoleCommand extends
         {
             if (icommand == null)
             {
-                throw new CommandNotFoundException();
+                throw new CommandException();
             }
 
                 if (i > -1)
@@ -71,12 +69,12 @@ public class CommandMPExecuteConsoleCommand extends
 
                         try
                         {
-                            icommand.execute(FMLCommonHandler.instance().getMinecraftServerInstance(), playerObject, astring);
+                            icommand.execute(ServerGetter.getServer(), playerObject, astring);
                             ++j;
                         }
                         catch (CommandException commandexception)
                         {
-                            TextComponentTranslation chatcomponenttranslation1 = new TextComponentTranslation(commandexception.getMessage(), commandexception.getErrorObjects());
+                            TranslationTextComponent chatcomponenttranslation1 = new TranslationTextComponent(commandexception.getMessage(), commandexception.getErrorObjects());
                             chatcomponenttranslation1.getStyle().setColor(TextFormatting.RED);
                             playerObject.sendMessage(chatcomponenttranslation1);
                         }
@@ -86,7 +84,7 @@ public class CommandMPExecuteConsoleCommand extends
                 }
                 else
                 {
-                    icommand.execute(FMLCommonHandler.instance().getMinecraftServerInstance(), playerObject, astring);
+                    icommand.execute(ServerGetter.getServer(), playerObject, astring);
                     ++j;
                 }
         }catch(Exception e){
@@ -96,7 +94,7 @@ public class CommandMPExecuteConsoleCommand extends
 	}
 
 	private PlayerEntity getPlayerByName(String name) {
-		return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().getPlayerEntityByName(name);
+		return ServerGetter.getServer().getEntityWorld().getPlayerEntityByName(name);
 	}
 
     private int getUsernameIndex(ICommand par1ICommand, String[] par2ArrayOfStr)

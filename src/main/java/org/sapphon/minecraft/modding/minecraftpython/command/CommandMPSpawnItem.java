@@ -6,7 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
@@ -46,8 +48,8 @@ public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 
 	
 	public void doWork() {
-		ServerWorld worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
-				.getWorld(0);// TODO ONLY WORKS IN OVERWORLD FOR NOW
+		ServerWorld worldserver = ServerGetter.getServer()
+				.getWorld(DimensionType.OVERWORLD);// TODO ONLY WORKS IN OVERWORLD FOR NOW
 		Item item = ItemLookup.getItemByName(name, worldserver);
 		ItemEntity entityWrapperForTheItemWithoutAHandToHoldIt = new ItemEntity(worldserver, x, y, z);
 		ItemStack theStack = new ItemStack(item, numberOfItemsToSpawn);

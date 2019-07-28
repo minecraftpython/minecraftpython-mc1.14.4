@@ -5,7 +5,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
@@ -37,8 +39,8 @@ public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		MinecraftServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance();
-		ServerWorld world = worldserver.getEntityWorld();
+		MinecraftServer worldserver = ServerGetter.getServer();
+		ServerWorld world = worldserver.getWorld(DimensionType.OVERWORLD);
 
 		Entity entity = EntityLookup.getEntityByName(this.nameOfEntityToSpawn,
 				world);

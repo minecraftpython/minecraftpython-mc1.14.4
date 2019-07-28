@@ -56,10 +56,7 @@ public class MinecraftPythonMod {
 			if(!ScriptLoaderConstants.resourcePathExists()){
 				ScriptLoaderConstants.setResourcePath(event);
 			}
-			FMLCommonHandler
-					.instance()
-					.bus()
-					.register(
+			MinecraftForge.EVENT_BUS.register(
 							new MinecraftPythonKeyHandler(
 									MinecraftPythonScriptLoader.SINGLETON()
 											.getMagicVessel()));

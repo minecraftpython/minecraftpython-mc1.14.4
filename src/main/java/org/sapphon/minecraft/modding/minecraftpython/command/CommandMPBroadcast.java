@@ -1,7 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.util.text.StringTextComponent;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 
 public class CommandMPBroadcast extends CommandMinecraftPythonServer {
 
@@ -17,7 +17,7 @@ public class CommandMPBroadcast extends CommandMinecraftPythonServer {
 
 	@Override
 	public void doWork() {
-		FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(this.toBroadcast));
+		ServerGetter.getServer().getPlayerList().sendMessage(new StringTextComponent(this.toBroadcast));
 	}
 
 	@Override

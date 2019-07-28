@@ -2,8 +2,9 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 
 public class CommandMPSpawnLightningBolt extends CommandMinecraftPythonServer {
 
@@ -14,7 +15,7 @@ public class CommandMPSpawnLightningBolt extends CommandMinecraftPythonServer {
 	
 	@Override
 	public void doWork() {
-		ServerWorld world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+		ServerWorld world = ServerGetter.getServer().getWorld(DimensionType.OVERWORLD);
 			int x = -175;
 			int z = 60;
 			

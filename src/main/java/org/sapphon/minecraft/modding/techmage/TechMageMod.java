@@ -1,8 +1,7 @@
 package org.sapphon.minecraft.modding.techmage;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
 import org.sapphon.minecraft.modding.minecraftpython.ScriptLoaderConstants;
 

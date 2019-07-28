@@ -6,8 +6,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import org.sapphon.minecraft.modding.base.BlockFinder;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSetBlock extends CommandMinecraftPythonServer {
@@ -43,8 +45,8 @@ public class CommandMPSetBlock extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		ServerWorld worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
-				.getWorld(0);// TODO
+		ServerWorld worldserver = ServerGetter.getServer()
+				.getWorld(DimensionType.OVERWORLD);// TODO
 		Block blocky = BlockFinder.getBlockWithName(blockType);
 		
 		boolean setBlock = worldserver.setBlockState(new BlockPos(x, y, z), blocky.getStateFromMeta(metadata));

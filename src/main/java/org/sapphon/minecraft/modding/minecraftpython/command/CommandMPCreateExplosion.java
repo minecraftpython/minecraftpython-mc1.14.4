@@ -1,7 +1,9 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.world.Explosion;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 
 public class CommandMPCreateExplosion extends CommandMinecraftPythonServer {
 
@@ -30,8 +32,8 @@ public class CommandMPCreateExplosion extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		ServerWorld worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
-				.getWorld(0); // TODO ONLY WORKS IN OVERWORLD FOR
+		ServerWorld worldserver = ServerGetter.getServer()
+				.getWorld(DimensionType.OVERWORLD); // TODO ONLY WORKS IN OVERWORLD FOR
 												// NOW
 		worldserver.createExplosion(null, x, y, z, size, Explosion.Mode.DESTROY);
 	}

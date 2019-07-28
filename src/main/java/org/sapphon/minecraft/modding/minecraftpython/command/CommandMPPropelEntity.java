@@ -3,7 +3,7 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import org.sapphon.minecraft.modding.base.ServerGetter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class CommandMPPropelEntity extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+		World world = ServerGetter.getServer().getWorld(0);
 		List<Entity> list = new ArrayList<Entity>(world.loadedEntityList);
 		Entity toPropel = null;
 		for (Entity entity : list) {
