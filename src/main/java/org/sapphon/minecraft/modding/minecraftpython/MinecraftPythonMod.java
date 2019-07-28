@@ -6,13 +6,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
 import org.sapphon.minecraft.modding.minecraftpython.command.*;
-import org.sapphon.minecraft.modding.minecraftpython.network.ChannelFactory;
+import org.sapphon.minecraft.modding.minecraftpython.network.*;
 import org.sapphon.minecraft.modding.minecraftpython.spells.ThreadFactory;
 
 @Mod("minecraftpython")
@@ -37,15 +36,18 @@ public class MinecraftPythonMod {
 	private void doSharedInit(final FMLCommonSetupEvent event)
 	{
 		if (isEnabled()) {
-			serverCommandPacketChannel = ChannelFactory.createChannel("MPServerCommand");
-			serverCommandPacketChannel.registerMessage(
-					PacketHandlerMinecraftPythonServerCommand.class,
-					PacketMinecraftPythonServerCommand.class, 0, Side.SERVER);
-			clientCommandPacketChannel = ChannelFactory.createChannel("MPClientCommand");
-			clientCommandPacketChannel.registerMessage(
-					PacketHandlerMinecraftPythonClientCommand.class,
-					PacketMinecraftPythonClientCommand.class, 0, Side.CLIENT);
+			createPacketChannels();
 		}
+	}
+
+	private void createPacketChannels() {
+		serverCommandPacketChannel = ChannelFactory.createChannel("MPServerCommand");
+		clientCommandPacketChannel = ChannelFactory.createChannel("MPClientCommand");
+		serverCommandPacketChannel.registerMessage(1,
+				PacketMinecraftPythonServerCommand.class, PacketMinecraftPythonServerCommand::toBytes, PacketMinecraftPythonServerCommand::fromBytes, PacketHandler::onMessage);
+		clientCommandPacketChannel.registerMessage(1,
+				PacketMinecraftPythonClientCommand.class, PacketMinecraftPythonClientCommand::toBytes, PacketMinecraftPythonClientCommand::fromBytes, PacketHandler::onMessage);
+
 	}
 
 	private void doClientInit(final FMLClientSetupEvent event) {
