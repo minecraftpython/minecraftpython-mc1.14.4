@@ -27,7 +27,7 @@ public class CommandMPGetPlayerPosition{
 	}
 
 	private PlayerEntity getPlayerEntityByName(String name){
-		PlayerEntity toReturn = Minecraft.getInstance().world.getPlayers().stream().filter((x) -> x.getDisplayName().getUnformattedComponentText().equals(this.nameOfPlayer)).findFirst().orElse(null);//Note this compares by getCommandSenderName whereas GameStart uses DisplayNames.  Never been a problem...yet.
+		PlayerEntity toReturn = Minecraft.getInstance().world.getPlayers().stream().filter((x) -> x.getDisplayName().getUnformattedComponentText().equals(this.nameOfPlayer)).findFirst().orElse(null);
 		if(toReturn == null){
 			JavaProblemHandler.printErrorMessageToDialogBox(new Exception("Problem finding player " + this.nameOfPlayer +  " by name.  Are you sure that player exists on this server?"));
 		}
