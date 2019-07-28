@@ -14,7 +14,7 @@ public class PythonProblemHandler extends AbstractProblemHandler {
 			MsgBox.error(pythonErrorMessageErrorOnly, "Python Interpreter Failure - See Below For Error Message");
 		}
 		else{
-			Minecraft minecraft = Minecraft.getMinecraft();
+			Minecraft minecraft = Minecraft.getInstance();
 			if(minecraft != null){
 				System.out.println(fullErrorMessage);
 				minecraft.displayGuiScreen(new GuiPythonErrorMessage(pythonErrorMessageFull));

@@ -39,7 +39,7 @@ public class CommandMPSpawnParticle extends CommandMinecraftPythonClient {
 			double xPlusOrMinusOneHalf = x -.5 + rand.nextDouble();
 			double yPlusOrMinusOneHalf = y -.5 + rand.nextDouble();
 			double zPlusOrMinusOneHalf = z -.5 + rand.nextDouble();
-			if(safelyGetParticleEnum() != null) Minecraft.getMinecraft().renderGlobal.spawnParticle(safelyGetParticleEnum().getParticleID(), true, xPlusOrMinusOneHalf, yPlusOrMinusOneHalf, zPlusOrMinusOneHalf, 0d, 0d, 0d);
+			if(safelyGetParticleEnum() != null) Minecraft.getInstance().renderGlobal.spawnParticle(safelyGetParticleEnum().getParticleID(), true, xPlusOrMinusOneHalf, yPlusOrMinusOneHalf, zPlusOrMinusOneHalf, 0d, 0d, 0d);
 		}
 	}
 

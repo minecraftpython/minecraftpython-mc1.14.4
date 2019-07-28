@@ -16,7 +16,7 @@ public class CommandMPApplyShader extends CommandMinecraftPythonClient {
 
 	@Override
 	public void doWork() {
-		Minecraft minecraft = Minecraft.getMinecraft();
+		Minecraft minecraft = Minecraft.getInstance();
 			minecraft.entityRenderer.switchUseShader();
 	}
 

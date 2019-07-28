@@ -73,7 +73,7 @@ public class JavaFileIOHelper {
 
 			for (ResourceLocation location : defaultResourceLocations) {
 
-				InputStream locationInputStream = Minecraft.getMinecraft()
+				InputStream locationInputStream = Minecraft.getInstance()
 						.getResourceManager().getResource(location)
 						.getInputStream();
 				if (locationInputStream != null) {

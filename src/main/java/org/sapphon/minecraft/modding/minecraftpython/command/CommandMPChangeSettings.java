@@ -17,11 +17,11 @@ public class CommandMPChangeSettings extends CommandMinecraftPythonClient {
 
 	@Override
 	public void doWork() {
-			Minecraft.getMinecraft().gameSettings.setOptionFloatValue(Options.FOV, 0);
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.RENDER_DISTANCE, Math.min(Minecraft.getMinecraft().gameSettings.renderDistanceChunks, 4));
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.FRAMERATE_LIMIT, 24);
-			Minecraft.getMinecraft().gameSettings.setOptionValue(Options.GRAPHICS, 0);
-			Minecraft.getMinecraft().gameSettings.saveOptions();
+			Minecraft.getInstance().gameSettings.setOptionFloatValue(Options.FOV, 0);
+			Minecraft.getInstance().gameSettings.setOptionValue(Options.RENDER_DISTANCE, Math.min(Minecraft.getInstance().gameSettings.renderDistanceChunks, 4));
+			Minecraft.getInstance().gameSettings.setOptionValue(Options.FRAMERATE_LIMIT, 24);
+			Minecraft.getInstance().gameSettings.setOptionValue(Options.GRAPHICS, 0);
+			Minecraft.getInstance().gameSettings.saveOptions();
 	}
 
 	@Override
