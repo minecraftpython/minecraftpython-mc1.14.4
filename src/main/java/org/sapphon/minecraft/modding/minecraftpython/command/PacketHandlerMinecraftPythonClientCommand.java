@@ -1,6 +1,4 @@
-package org.sapphon.minecraft.modding.minecraftpython;
-
-import org.sapphon.minecraft.modding.minecraftpython.command.CommandQueueClientSide;
+package org.sapphon.minecraft.modding.minecraftpython.command;
 
 public class PacketHandlerMinecraftPythonClientCommand implements IMessageHandler<PacketMinecraftPythonClientCommand, IMessage> {
 

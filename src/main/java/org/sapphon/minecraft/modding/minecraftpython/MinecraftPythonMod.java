@@ -11,10 +11,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
-import org.sapphon.minecraft.modding.minecraftpython.command.ClientTickHandler;
-import org.sapphon.minecraft.modding.minecraftpython.command.PacketHandlerMinecraftPythonServerCommand;
-import org.sapphon.minecraft.modding.minecraftpython.command.PacketMinecraftPythonServerCommand;
-import org.sapphon.minecraft.modding.minecraftpython.command.ServerTickHandler;
+import org.sapphon.minecraft.modding.minecraftpython.command.*;
 import org.sapphon.minecraft.modding.minecraftpython.spells.ThreadFactory;
 
 @Mod("minecraftpython")
