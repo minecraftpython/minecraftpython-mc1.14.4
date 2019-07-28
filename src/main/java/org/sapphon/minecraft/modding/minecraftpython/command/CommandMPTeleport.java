@@ -3,8 +3,8 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.loading.FMLCommonLaunchHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class CommandMPTeleport extends CommandMinecraftPythonServer {
 
 
 	public void doWork(){
-		WorldServer world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+		ServerWorld world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
 		List<PlayerEntity> players = new ArrayList<PlayerEntity>(world.playerEntities);
 		for (PlayerEntity entityPlayerMP : players) {
 			if(entityPlayerMP.getDisplayName().getUnformattedText().equals(teleportingPlayer)){

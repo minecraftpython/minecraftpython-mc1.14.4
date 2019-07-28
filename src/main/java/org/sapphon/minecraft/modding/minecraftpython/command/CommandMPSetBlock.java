@@ -44,7 +44,7 @@ public class CommandMPSetBlock extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		WorldServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
+		ServerWorld worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
 				.getWorld(0);// TODO
 		Block blocky = BlockFinder.getBlockWithName(blockType);
 		
