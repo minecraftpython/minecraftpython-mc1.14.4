@@ -28,7 +28,7 @@ public class GuiPythonErrorMessage extends Screen {
 		byte b0 = -16;
 		boolean flag = true;
 		this.buttons
-				.add(new Button(0, 0, this.width / 2 - 100, this.height / 4 + 104, "Got It, Close This Message", null);
+				.add(new Button(0, 0, this.width / 2 - 100, this.height / 4 + 104, "Got It, Close This Message", null));
 	}
 
 	protected void actionPerformed(Button buttonPushed) {
