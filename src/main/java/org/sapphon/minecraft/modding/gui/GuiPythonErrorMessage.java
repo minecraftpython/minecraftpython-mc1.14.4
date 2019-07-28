@@ -1,14 +1,14 @@
 package org.sapphon.minecraft.modding.gui;
 
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.StringTextComponent;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiPythonErrorMessage extends AbstractGui {
+public class GuiPythonErrorMessage extends Screen {
 	private int field_146444_f;
 	private static final String __OBFID = "CL_22715703";
 	private String[] messagesAsInput;
@@ -16,6 +16,7 @@ public class GuiPythonErrorMessage extends AbstractGui {
 	private String rawMessage;
 
 	public GuiPythonErrorMessage(String message) {
+		super(new StringTextComponent("Error Title"));
 		this.rawMessage = message;
 		this.messagesAsInput = message.split("\r\n");
 		this.messagesToDisplay = new ArrayList<String>();
@@ -23,22 +24,21 @@ public class GuiPythonErrorMessage extends AbstractGui {
 	}
 
 	public void initGui() {
-		this.buttonList.clear();
+		this.buttons.clear();
 		byte b0 = -16;
 		boolean flag = true;
-		this.buttonList
-				.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 104, "Got It, Close This Message"));
+		this.buttons
+				.add(new Button(0, 0, this.width / 2 - 100, this.height / 4 + 104, "Got It, Close This Message", null);
 	}
 
-	protected void actionPerformed(GuiButton buttonPushed) {
-		switch (buttonPushed.id) {
-		case 0:
-			this.mc.displayGuiScreen((GuiScreen) null);
-			this.mc.setIngameFocus();
-			break;
-		default:
+	protected void actionPerformed(Button buttonPushed) {
+		if(buttonPushed.getMessage().equals("Got It, Close This Message")) {
+			this.minecraft.displayGuiScreen((Screen) null);
+			this.minecraft.setGameFocused(true);
+		}
+		else{
 			JavaProblemHandler.printErrorMessageToDialogBox(new Exception(
-					"Unexpected GUI input on error message screen.  Input ID: " + buttonPushed.id));
+					"Unexpected GUI input on error message screen.  Button: " + buttonPushed.getMessage()));
 		}
 	}
 
@@ -56,19 +56,19 @@ public class GuiPythonErrorMessage extends AbstractGui {
 	public void drawScreen(int par1, int par2, float par3) {
 		try{
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRenderer, "Python had a problem understanding you!", this.width / 2, 40,
+		this.drawCenteredString(this.font, "Python had a problem understanding you!", this.width / 2, 40,
 				16777215);
 		int yOffsetOfFirstLine = 80;
 		int charactersToPermitPerLine = 60;
 		if (populateMessagesToDisplay(charactersToPermitPerLine)) {
 			for (int i = 0; i < messagesToDisplay.size(); i++) {
-				this.drawCenteredString(this.fontRenderer, messagesToDisplay.get(i).trim(), this.width / 2,
+				this.drawCenteredString(this.font, messagesToDisplay.get(i).trim(), this.width / 2,
 						yOffsetOfFirstLine + (i * 10), 16777215);
 			}
 			messagesToDisplay.clear();
 		}
 		else{
-			this.drawCenteredString(this.fontRenderer, rawMessage.trim(), this.width / 2,
+			this.drawCenteredString(this.font, rawMessage.trim(), this.width / 2,
 					yOffsetOfFirstLine, 16777215);
 		}
 		super.drawScreen(par1, par2, par3);
