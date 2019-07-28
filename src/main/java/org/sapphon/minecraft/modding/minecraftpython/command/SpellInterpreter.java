@@ -104,9 +104,9 @@ public class SpellInterpreter {
 		synchronized (interpreter) {
 			if ((rayTrace != null)) {
 				try {
-					this.interpreter.set("ray_x", rayTrace.hitVec.x);
-					this.interpreter.set("ray_y", rayTrace.hitVec.y);
-					this.interpreter.set("ray_z", rayTrace.hitVec.z);
+					this.interpreter.set("ray_x", rayTrace.getHitVec().x);
+					this.interpreter.set("ray_y", rayTrace.getHitVec().y);
+					this.interpreter.set("ray_z", rayTrace.getHitVec().z);
 				} catch (Exception e) {
 					PythonProblemHandler.printErrorMessageToDialogBox(e);
 				}
