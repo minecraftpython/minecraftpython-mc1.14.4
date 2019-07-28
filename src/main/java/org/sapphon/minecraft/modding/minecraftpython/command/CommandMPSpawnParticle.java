@@ -1,6 +1,15 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 import java.util.Random;
@@ -38,13 +47,17 @@ public class CommandMPSpawnParticle extends CommandMinecraftPythonClient {
 			double xPlusOrMinusOneHalf = x -.5 + rand.nextDouble();
 			double yPlusOrMinusOneHalf = y -.5 + rand.nextDouble();
 			double zPlusOrMinusOneHalf = z -.5 + rand.nextDouble();
-			if(safelyGetParticleEnum() != null) Minecraft.getInstance().renderGlobal.spawnParticle(safelyGetParticleEnum().getParticleID(), true, xPlusOrMinusOneHalf, yPlusOrMinusOneHalf, zPlusOrMinusOneHalf, 0d, 0d, 0d);
+			if(safelyGetParticleEnum() != null) Minecraft.getInstance().particles.addParticle(safelyGetParticleEnum(), x, y, z, 0, 0, 0);
 		}
 	}
 
-	private EnumParticleTypes safelyGetParticleEnum() {
+	private BasicParticleType safelyGetParticleEnum() {
 		try{
-			return EnumParticleTypes.valueOf(particleType.toUpperCase());
+			return (BasicParticleType)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(particleType.toLowerCase()));
+		}
+		catch(ClassCastException cce){
+			MinecraftPythonMod.logger.error(String.format("Particle [%s] cannot be cast to BasicParticleType", particleType));
+		return null;
 		}
 		catch(Exception e){
 			MinecraftPythonMod.logger.error(String.format("Particle type [%s] not found", particleType));
