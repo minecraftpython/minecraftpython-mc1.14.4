@@ -2,7 +2,6 @@ package org.sapphon.minecraft.modding.minecraftpython;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import org.sapphon.minecraft.modding.minecraftpython.command.*;
 
 public class PacketMinecraftPythonClientCommand implements IMessage {

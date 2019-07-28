@@ -47,7 +47,7 @@ public class PacketMinecraftPythonServerCommand implements IMessage {
 		}else if(commandName.equals(CommandMinecraftPythonServer.SPAWNITEM_NAME)){
 			command = new CommandMPSpawnItem(commandAndArgsToDeserialize);
 		}else if(commandName.equals(CommandMinecraftPythonServer.CONSOLECOMMAND_NAME)){
-			command = new CommandMPExecuteConsoleCommand(commandAndArgsToDeserialize);	//TODO oops 1.8
+			command = new CommandMPExecuteConsoleCommand(commandAndArgsToDeserialize);
 		}
 		else {
 			JavaProblemHandler.printErrorMessageToDialogBox(new Exception(
