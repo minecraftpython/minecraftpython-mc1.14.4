@@ -1,130 +1,55 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
+import com.mojang.brigadier.Command;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
+import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.EntitySelector;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.sapphon.minecraft.modding.base.ServerGetter;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPExecuteConsoleCommand extends
         CommandMinecraftPythonServer {
-	
-	private String commandString;
-	private String playerName;
-	
-	public CommandMPExecuteConsoleCommand(String commandText){
-		this.commandString = commandText;
-		this.playerName = Minecraft.getInstance().player.getDisplayName().getUnformattedComponentText();
-	}
-	
-	public CommandMPExecuteConsoleCommand(String[] commandAndArgsToDeserialize) {
-		this.commandString = commandAndArgsToDeserialize[1];
-		this.playerName = commandAndArgsToDeserialize[2];
-	}
-    private static String[] dropFirstString(String[] par0ArrayOfStr)
-    {
-        String[] astring1 = new String[par0ArrayOfStr.length - 1];
 
-        for (int i = 1; i < par0ArrayOfStr.length; ++i)
-        {
-            astring1[i - 1] = par0ArrayOfStr[i];
-        }
+    private String commandString;
+    private String playerName;
 
-        return astring1;
+    public CommandMPExecuteConsoleCommand(String commandText) {
+        this.commandString = commandText;
+        this.playerName = Minecraft.getInstance().player.getDisplayName().getUnformattedComponentText();
+    }
+
+    public CommandMPExecuteConsoleCommand(String[] commandAndArgsToDeserialize) {
+        this.commandString = commandAndArgsToDeserialize[1];
+        this.playerName = commandAndArgsToDeserialize[2];
     }
 
 
-	@Override
-	public void doWork() {
-		PlayerEntity playerObject = getPlayerByName(playerName);
-        String[] astring = commandString.split(" ");
-        String s1 = astring[0];
-        astring = dropFirstString(astring);
-        ICommand icommand = ServerGetter.getServer().getCommandManager().getCommands().get(s1);
-        int i = this.getUsernameIndex(icommand, astring);
-        int j = 0;
-
-        try
-        {
-            if (icommand == null)
-            {
-                throw new CommandException();
-            }
-
-                if (i > -1)
-                {
-                    ServerPlayerEntity[] aentityplayermp = new ServerPlayerEntity[0];
-                    aentityplayermp = EntitySelector.matchEntities(playerObject, astring[i], ServerPlayerEntity.class).toArray(aentityplayermp);
-                    String s2 = astring[i];
-                    ServerPlayerEntity[] aentityplayermp1 = aentityplayermp;
-                    int k = aentityplayermp.length;
-
-                    for (int l = 0; l < k; ++l)
-                    {
-                        ServerPlayerEntity entityplayermp = aentityplayermp1[l];
-                        astring[i] = entityplayermp.getName();
-
-                        try
-                        {
-                            icommand.execute(ServerGetter.getServer(), playerObject, astring);
-                            ++j;
-                        }
-                        catch (CommandException commandexception)
-                        {
-                            TranslationTextComponent chatcomponenttranslation1 = new TranslationTextComponent(commandexception.getMessage(), commandexception.getErrorObjects());
-                            chatcomponenttranslation1.getStyle().setColor(TextFormatting.RED);
-                            playerObject.sendMessage(chatcomponenttranslation1);
-                        }
-                    }
-
-                    astring[i] = s2;
-                }
-                else
-                {
-                    icommand.execute(ServerGetter.getServer(), playerObject, astring);
-                    ++j;
-                }
-        }catch(Exception e){
-        	
+    @Override
+    public void doWork() {
+        PlayerEntity playerObject = getPlayerByName(playerName);
+        try {
+            int successValue = ServerGetter.getServer().getCommandManager().handleCommand(playerObject.getCommandSource().withPermissionLevel(99), commandString);
+        } catch (Exception e) {
+            MinecraftPythonMod.logger.error("Could not execute console command", e);
         }
 
-	}
-
-	private PlayerEntity getPlayerByName(String name) {
-		return ServerGetter.getServer().getEntityWorld().getPlayerEntityByName(name);
-	}
-
-    private int getUsernameIndex(ICommand par1ICommand, String[] par2ArrayOfStr)
-    {
-        if (par1ICommand == null)
-        {
-            return -1;
-        }
-        else
-        {
-            for (int i = 0; i < par2ArrayOfStr.length; ++i)
-            {
-                try{
-                if (par1ICommand.isUsernameIndex(par2ArrayOfStr, i) && EntitySelector.matchesMultiplePlayers(par2ArrayOfStr[i]))
-                {
-                    return i;
-                }
-                }catch(CommandException e){
-                    MinecraftPythonMod.logger.error("Could not get index of player named " + par2ArrayOfStr[i]);
-                    return -1;
-                }
-            }
-
-            return -1;
-        }
     }
-				
-	@Override
-	public String serialize() {
-		//TODO this will never work if it ever needs to, commands must certainly contain commas sometimes...?
-		return CONSOLECOMMAND_NAME + SERIAL_DIV + commandString + SERIAL_DIV + playerName;
-	}
+
+    private PlayerEntity getPlayerByName(String name) {
+        return ServerGetter.getServer().getPlayerList().getPlayerByUsername(name);
+    }
+
+    @Override
+    public String serialize() {
+        //TODO this will never work if it ever needs to, commands must certainly contain commas sometimes...?
+        return CONSOLECOMMAND_NAME + SERIAL_DIV + commandString + SERIAL_DIV + playerName;
+    }
 }
