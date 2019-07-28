@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiPythonErrorMessage extends Screen {
-	private int field_146444_f;
 	private static final String __OBFID = "CL_22715703";
 	private String[] messagesAsInput;
 	private List<String> messagesToDisplay;
@@ -43,19 +42,11 @@ public class GuiPythonErrorMessage extends Screen {
 	}
 
 	/**
-	 * Called from the main game loop to update the screen.
-	 */
-	public void updateScreen() {
-		super.updateScreen();
-		++this.field_146444_f;
-	}
-
-	/**
 	 * Draws the screen and all the components in it.
 	 */
-	public void drawScreen(int par1, int par2, float par3) {
+	@Override
+	public void render(int par1, int par2, float par3) {
 		try{
-		this.drawDefaultBackground();
 		this.drawCenteredString(this.font, "Python had a problem understanding you!", this.width / 2, 40,
 				16777215);
 		int yOffsetOfFirstLine = 80;
@@ -71,7 +62,7 @@ public class GuiPythonErrorMessage extends Screen {
 			this.drawCenteredString(this.font, rawMessage.trim(), this.width / 2,
 					yOffsetOfFirstLine, 16777215);
 		}
-		super.drawScreen(par1, par2, par3);
+		super.render(par1, par2, par3);
 		}catch(Exception e){}
 	}
 
