@@ -11,14 +11,9 @@ import org.sapphon.minecraft.modding.base.CommonProxy;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
 import org.sapphon.minecraft.modding.minecraftpython.ScriptLoaderConstants;
 
-@Mod(modid = TechMageMod.MODID, version = TechMageMod.VERSION, name = TechMageMod.MODID)
 public class TechMageMod {
 	public static final String MODID = "techmage";
-	public static final String VERSION = "1.10.2-0.3.0";
-
-	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
-	}
+	public static final String VERSION = "1.14.4-0.5.0";
 
 	@Mod.Instance(value = TechMageMod.MODID)
 	public static TechMageMod instance;
