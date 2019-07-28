@@ -14,7 +14,7 @@ public class ScriptLoaderConstants {
 	public static String MINECRAFT_PROGRAMMING_PATH;
 	public static String TECHMAGE_SCRIPTS_PATH;
 	public static String WAND_TEXTURE_LOCATION;
-	public static final String WAND_TEXTURE_NAME_SUFFIX = "Wand";
+	public static final String WAND_TEXTURE_NAME_SUFFIX = "_wand";
 
 	public static boolean isAPythonScript(File script) {
 		return FilenameUtils.getExtension(script.getAbsolutePath()).matches(
