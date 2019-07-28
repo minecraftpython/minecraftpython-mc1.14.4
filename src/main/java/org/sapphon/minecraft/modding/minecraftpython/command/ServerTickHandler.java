@@ -4,10 +4,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ServerTickHandler {
-	@SubscribeEvent
-	public void onServerTick(TickEvent.ServerTickEvent event){
-		if(event.phase.compareTo(TickEvent.Phase.END) == 0){
-			CommandQueueServerSide.SINGLETON().runAndClearScheduledCommands();
-		}
-	}
+    @SubscribeEvent
+    public void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase.compareTo(TickEvent.Phase.END) == 0) {
+            CommandQueueServerSide.SINGLETON().runAndClearScheduledCommands();
+        }
+    }
 }

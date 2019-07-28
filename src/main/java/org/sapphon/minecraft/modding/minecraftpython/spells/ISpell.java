@@ -8,25 +8,25 @@ import java.io.File;
 
 
 public interface ISpell {
-	public String getPythonScriptAsString();
+    public String getPythonScriptAsString();
 
-	public File getPythonScriptAsFile();
+    public File getPythonScriptAsFile();
 
-	public PyCode getCompiledPythonCode(PythonInterpreter interpreter);
+    public PyCode getCompiledPythonCode(PythonInterpreter interpreter);
 
-	String getSpellShortName();
+    String getSpellShortName();
 
-	public int getRequiredExperienceLevel();
-	
-	public String getAuthorName();
-	
-	public String getDisplayName();
+    public int getRequiredExperienceLevel();
 
-	public boolean hasCustomTexture();
-	
-	public String getCustomTextureName();
-	
-	public WandType getWandType();
+    public String getAuthorName();
 
-	public long getCooldownInMilliseconds();
+    public String getDisplayName();
+
+    public boolean hasCustomTexture();
+
+    public String getCustomTextureName();
+
+    public WandType getWandType();
+
+    public long getCooldownInMilliseconds();
 }

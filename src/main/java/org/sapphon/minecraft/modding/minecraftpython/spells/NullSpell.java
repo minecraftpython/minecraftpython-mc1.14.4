@@ -7,13 +7,13 @@ import java.io.File;
 
 public class NullSpell extends AbstractSpell {
 
-	public NullSpell(String name, File pythonScript) {
-		super(name, pythonScript);
-	}
+    public NullSpell(String name, File pythonScript) {
+        super(name, pythonScript);
+    }
 
-	@Override
-	public PyCode getCompiledPythonCode(PythonInterpreter interpreter) {
-		return interpreter.compile("");
-	}
+    @Override
+    public PyCode getCompiledPythonCode(PythonInterpreter interpreter) {
+        return interpreter.compile("");
+    }
 
 }

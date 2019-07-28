@@ -5,7 +5,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class ChannelFactory {
-    public static SimpleChannel createChannel(String name){
+    public static SimpleChannel createChannel(String name) {
         String version = "1";
         String namespace = "minecraftpython";
         return NetworkRegistry.newSimpleChannel(
