@@ -1,13 +1,10 @@
 package org.sapphon.minecraft.modding.minecraftpython.network;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraft.network.PacketBuffer;
 import org.sapphon.minecraft.modding.minecraftpython.command.*;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 //TODO this whole class requires a re-factor to be at all data-driven.  Right now everything is minimally automated and honestly kinda questionable technically
 public class PacketMinecraftPythonServerCommand {
-	private String commandName;
 	public CommandMinecraftPythonServer command;
 
 	public PacketMinecraftPythonServerCommand() {
@@ -18,12 +15,11 @@ public class PacketMinecraftPythonServerCommand {
 		this.command = commandToPackUp;
 	}
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		String text = ByteBufUtils.readUTF8String(buf);
+	public static PacketMinecraftPythonServerCommand fromBytes(PacketBuffer buf) {
+		String text = buf.readString();
 		String[] commandAndArgsToDeserialize = text.split(CommandMinecraftPythonAbstract.SERIAL_DIV);
-		commandName = commandAndArgsToDeserialize[0].trim();
-
+		String commandName = commandAndArgsToDeserialize[0].trim();
+		CommandMinecraftPythonServer command;
 		if(commandName.equals(CommandMPSetBlock.SETBLOCK_NAME)){
 			command = new CommandMPSetBlock(commandAndArgsToDeserialize);
 			
@@ -52,13 +48,14 @@ public class PacketMinecraftPythonServerCommand {
 			JavaProblemHandler.printErrorMessageToDialogBox(new Exception(
 					"A server-side command  (type " + commandName
 							+ ")'s packet could not be interpreted."));
+			return null;
 		}
+		return new PacketMinecraftPythonServerCommand(command);
 	}
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		String serializedCommand = command.serialize();
-		ByteBufUtils.writeUTF8String(buf, serializedCommand);
+	public PacketBuffer toBytes(PacketBuffer buffer) {
+		buffer.writeString(command.serialize());
+		return buffer;
 	}
 
 }
