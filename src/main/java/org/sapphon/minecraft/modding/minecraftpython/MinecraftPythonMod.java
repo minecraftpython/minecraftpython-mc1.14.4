@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -12,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
 import org.sapphon.minecraft.modding.minecraftpython.command.PacketHandlerMinecraftPythonServerCommand;
 import org.sapphon.minecraft.modding.minecraftpython.command.PacketMinecraftPythonServerCommand;
+import org.sapphon.minecraft.modding.minecraftpython.command.ServerTickHandler;
 import org.sapphon.minecraft.modding.minecraftpython.spells.ThreadFactory;
 
 @Mod("minecraftpython")
@@ -24,6 +26,7 @@ public class MinecraftPythonMod {
 	public MinecraftPythonMod(){
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doSharedInit);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientInit);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doServerInit);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -65,6 +68,10 @@ public class MinecraftPythonMod {
 				ThreadFactory.makeJavaGameLoopThread().start();
 			}
 		}
+	}
+
+	private void doServerInit(final FMLDedicatedServerSetupEvent event){
+		MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
 	}
 
 	private boolean isEnabled() {
