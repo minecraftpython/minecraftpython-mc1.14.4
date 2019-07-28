@@ -3,6 +3,7 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import org.sapphon.minecraft.modding.base.ServerGetter;
 
 import java.util.ArrayList;
@@ -35,15 +36,8 @@ public class CommandMPPropelEntity extends CommandMinecraftPythonServer {
 	}
 
 	public void doWork() {
-		World world = ServerGetter.getServer().getWorld(0);
-		List<Entity> list = new ArrayList<Entity>(world.loadedEntityList);
-		Entity toPropel = null;
-		for (Entity entity : list) {
-			if (entity.getEntityId() == this.idToPropel) {
-				toPropel = entity;
-				break;
-			}
-		}
+		World world = ServerGetter.getServer().getWorld(DimensionType.OVERWORLD);
+		Entity toPropel = world.getEntityByID(this.idToPropel);
 		if (toPropel != null) {
 			toPropel.addVelocity(xVel, yVel, zVel);
 			toPropel.velocityChanged = true;
