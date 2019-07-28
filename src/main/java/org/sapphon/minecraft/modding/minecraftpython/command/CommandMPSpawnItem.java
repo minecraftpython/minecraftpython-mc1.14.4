@@ -1,14 +1,13 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.server.ServerWorld;
+import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 	private double x;
@@ -17,7 +16,7 @@ public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 	private String name;
 	private int numberOfItemsToSpawn;
 	private String nbtString;
-	private NBTTagCompound nbtData;
+	private CompoundNBT nbtData;
 
 	public CommandMPSpawnItem(double x, double y, double z, String name, int numberOfItemsToSpawn, String nbtString) {
 		this.x = x;
@@ -37,16 +36,10 @@ public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 				Double.parseDouble(commandAndArgsToDeserialize[2]),
 				Double.parseDouble(commandAndArgsToDeserialize[3]), commandAndArgsToDeserialize[4], Integer.parseInt(commandAndArgsToDeserialize[5]), commandAndArgsToDeserialize[6]);
 		try {
-			NBTBase possibleNBT;
-			possibleNBT = JsonToNBT.getTagFromJson(nbtString);
-			if(possibleNBT instanceof NBTTagCompound){
-				nbtData=(NBTTagCompound)possibleNBT;
-			}
-			else{
-				nbtData = new NBTTagCompound();
-			}
-		} catch (NBTException e) {
-			nbtData = new NBTTagCompound();
+				nbtData=JsonToNBT.getTagFromJson(nbtString);
+		} catch (CommandSyntaxException e) {
+			MinecraftPythonMod.logger.error("Spawnitem encountered unparseable NBT", e);
+			nbtData = new CompoundNBT();
 		}
 	
 	}
@@ -58,9 +51,9 @@ public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 		Item item = ItemLookup.getItemByName(name, worldserver);
 		ItemEntity entityWrapperForTheItemWithoutAHandToHoldIt = new ItemEntity(worldserver, x, y, z);
 		ItemStack theStack = new ItemStack(item, numberOfItemsToSpawn);
-		if(nbtData!=null){theStack.setTagCompound(nbtData);}
+		if(nbtData!=null){theStack.setTag(nbtData);}
 		entityWrapperForTheItemWithoutAHandToHoldIt.setItem(theStack);
-		worldserver.spawnEntity(entityWrapperForTheItemWithoutAHandToHoldIt);
+		worldserver.summonEntity(entityWrapperForTheItemWithoutAHandToHoldIt);
 	}
 
 	@Override

@@ -1,10 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.server.ServerWorld;
 
 public class CommandMPCreateExplosion extends CommandMinecraftPythonServer {
 
@@ -36,25 +33,7 @@ public class CommandMPCreateExplosion extends CommandMinecraftPythonServer {
 		ServerWorld worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
 				.getWorld(0); // TODO ONLY WORKS IN OVERWORLD FOR
 												// NOW
-		worldserver.createExplosion(new Entity(worldserver) {
-			@Override
-			protected void entityInit() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			protected void readEntityFromNBT(NBTTagCompound var1) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			protected void writeEntityToNBT(NBTTagCompound var1) {
-				// TODO Auto-generated method stub
-
-			}
-		}, x, y, z, size, true);
+		worldserver.createExplosion(null, x, y, z, size, Explosion.Mode.DESTROY);
 	}
 	@Override
 	public String serialize() {

@@ -1,13 +1,13 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.server.ServerWorld;
+import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
 	public double x;
@@ -39,15 +39,16 @@ public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
 
 	public void doWork() {
 		MinecraftServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance();
-		World world = worldserver.getEntityWorld();
+		ServerWorld world = worldserver.getEntityWorld();
 
 		Entity entity = EntityLookup.getEntityByName(this.nameOfEntityToSpawn,
 				world);
 		if (!nbtData.isEmpty() && !nbtData.equals("{}")) {
 			try {
-				entity.readFromNBT((NBTTagCompound) JsonToNBT
+				entity.read(JsonToNBT
 						.getTagFromJson(nbtData));
-			} catch (NBTException e) {
+			} catch (CommandSyntaxException e) {
+				MinecraftPythonMod.logger.error("Spawnentity command received unparseable NBT", e);
 				e.printStackTrace();
 			}
 		}
@@ -55,11 +56,11 @@ public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
 
 		// Tamed horse hack
 		if (entity instanceof HorseEntity) {
-			EntityHorse horse = (HorseEntity) entity;
+			HorseEntity horse = (HorseEntity) entity;
 			horse.setHorseTamed(true);
 			horse.setHorseSaddled(true);
 		}
-		world.spawnEntity(entity);
+		world.summonEntity(entity);
 	}
 
 	@Override

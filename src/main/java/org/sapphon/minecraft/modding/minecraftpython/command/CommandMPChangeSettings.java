@@ -17,6 +17,7 @@ public class CommandMPChangeSettings extends CommandMinecraftPythonClient {
 
 	@Override
 	public void doWork() {
+
 			Minecraft.getInstance().gameSettings.setOptionFloatValue(Options.FOV, 0);
 			Minecraft.getInstance().gameSettings.setOptionValue(Options.RENDER_DISTANCE, Math.min(Minecraft.getInstance().gameSettings.renderDistanceChunks, 4));
 			Minecraft.getInstance().gameSettings.setOptionValue(Options.FRAMERATE_LIMIT, 24);

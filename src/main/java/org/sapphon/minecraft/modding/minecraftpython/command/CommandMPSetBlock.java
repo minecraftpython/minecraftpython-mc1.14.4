@@ -1,15 +1,15 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.server.ServerWorld;
 import org.sapphon.minecraft.modding.base.BlockFinder;
+import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 public class CommandMPSetBlock extends CommandMinecraftPythonServer {
 
@@ -50,19 +50,20 @@ public class CommandMPSetBlock extends CommandMinecraftPythonServer {
 		
 		boolean setBlock = worldserver.setBlockState(new BlockPos(x, y, z), blocky.getStateFromMeta(metadata));
 		if (!tileEntityNbtData.isEmpty() && !tileEntityNbtData.equals("{}")) {
-			NBTTagCompound nbtTagCompound = null;
+			CompoundNBT nbtTagCompound = null;
 			try {
-				nbtTagCompound = (NBTTagCompound) JsonToNBT.getTagFromJson(tileEntityNbtData);
-			} catch (NBTException e) {
+				nbtTagCompound = JsonToNBT.getTagFromJson(tileEntityNbtData);
+			} catch (CommandSyntaxException e) {
+				MinecraftPythonMod.logger.error("Setblock got unparseable NBT", e);
 				e.printStackTrace();
 			}
 			TileEntity tileentity = worldserver.getTileEntity(new BlockPos(x, y, z));
 
 			if (tileentity != null && nbtTagCompound != null) {
-				nbtTagCompound.setInteger("x", x);
-				nbtTagCompound.setInteger("y", y);
-				nbtTagCompound.setInteger("z", z);
-				tileentity.readFromNBT(nbtTagCompound);
+				nbtTagCompound.putInt("x", x);
+				nbtTagCompound.putInt("y", y);
+				nbtTagCompound.putInt("z", z);
+				tileentity.read(nbtTagCompound);
 			}
 		}
 	}

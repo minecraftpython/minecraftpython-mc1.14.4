@@ -1,7 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumParticleTypes;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 
 import java.util.Random;

@@ -1,9 +1,11 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class CommandMPSpawnLightningBolt extends CommandMinecraftPythonServer {
@@ -20,9 +22,8 @@ public class CommandMPSpawnLightningBolt extends CommandMinecraftPythonServer {
 			int z = 60;
 			
 			int y = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z)).getY() - 1;
-			EntityLightningBolt entityLightningBolt = new EntityLightningBolt(world, x, y, z, false);
-			world.addWeatherEffect(entityLightningBolt);
-			world.spawnEntity(entityLightningBolt);
+			LightningBoltEntity entityLightningBolt = new LightningBoltEntity(world, x, y, z, false);
+			world.addLightningBolt(entityLightningBolt);
 	}
 	@Override
 	public String serialize() {
