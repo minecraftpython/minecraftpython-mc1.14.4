@@ -1,16 +1,17 @@
 package org.sapphon.minecraft.modding.techmage;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.world.World;
 import org.sapphon.minecraft.modding.minecraftpython.IArcane;
 import org.sapphon.minecraft.modding.minecraftpython.ScriptLoaderConstants;
@@ -18,7 +19,6 @@ import org.sapphon.minecraft.modding.minecraftpython.command.SpellInterpreter;
 import org.sapphon.minecraft.modding.minecraftpython.spells.ISpell;
 import org.sapphon.minecraft.modding.minecraftpython.spells.SpellCastingRunnable;
 import org.sapphon.minecraft.modding.minecraftpython.spells.SpellThreadFactory;
-import org.sapphon.minecraft.modding.techmage.wands.WandTextureRepository;
 import org.sapphon.minecraft.modding.techmage.wands.WandType;
 
 import java.io.File;
@@ -31,17 +31,27 @@ public class MagicWand extends Item implements IArcane {
 	private int experienceLevelRequirement;
 
 	public MagicWand(ISpell spell, int experienceLevelRequirement,
-			CreativeTabs creativeModeInventoryTab) {
-		super();
+			ItemGroup creativeModeInventoryTab) {
+		super(new Item.Properties().group(creativeModeInventoryTab).maxStackSize(1));
 		this.experienceLevelRequirement = experienceLevelRequirement;
-		this.setCreativeTab(creativeModeInventoryTab);
 		storedSpell = spell;
+		setRegistryName(spell);
+		this.wandType = spell.getWandType();
+		this.spellInterpreter = new SpellInterpreter();
+	}
+
+	private void setRegistryName(ISpell spell) {
+		this.setRegistryName(TechMageMod.MODID,
+				spell.getSpellShortName()
+						+ ScriptLoaderConstants.WAND_TEXTURE_NAME_SUFFIX);
+		//This is how wands were textured prior to the 1.8 update
+		/*
 		if (wandHasHardcodedTexture()) {
-			this.setUnlocalizedName(TechMageMod.MODID + ":"
-					+ spell.getSpellShortName()
+			this.setUnlocalizedName(TechMageMod.MODID + ":" +
+					spell.getSpellShortName()
 					+ ScriptLoaderConstants.WAND_TEXTURE_NAME_SUFFIX);
-		} else if (this.getSpell().hasCustomTexture()) {
-			String customTextureName = this.getSpell().getCustomTextureName();
+		} else if (spell.hasCustomTexture()) {
+			String customTextureName = spell.getCustomTextureName();
 			if (customTextureName.contains(":")) {
 				this.setUnlocalizedName(customTextureName);
 			} else {
@@ -50,12 +60,7 @@ public class MagicWand extends Item implements IArcane {
 		} else {
 			this.setUnlocalizedName(WandTextureRepository.SINGLETON()
 					.getNextWandTextureName());
-		}
-		this.maxStackSize = 1;
-		this.setUnlocalizedName(spell.getSpellShortName()
-				+ ScriptLoaderConstants.WAND_TEXTURE_NAME_SUFFIX);
-		this.wandType = spell.getWandType();
-		this.spellInterpreter = new SpellInterpreter();
+		}*/
 	}
 
 	private boolean wandHasHardcodedTexture() {// TODO this needs to look at the
@@ -68,31 +73,30 @@ public class MagicWand extends Item implements IArcane {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer techmage, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity techmage, Hand hand) {
 		if (techmage.experienceLevel < this.experienceLevelRequirement) {
 			if (world.isRemote) {
-				techmage.sendMessage(new TextComponentString(
+				techmage.sendMessage(new StringTextComponent(
 						"Not enough experience!"));
 			}
 		} else if (timer() > this.getSpell().getCooldownInMilliseconds()) {
 			this.castSpellFromWand(techmage, world);
 		}
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, techmage.getHeldItem(hand));
+		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, techmage.getHeldItem(hand));
 	}
 
 	private long timer() {
 		return System.currentTimeMillis() - lastCast;
 	}
 
-	public void castSpellFromWand(EntityLivingBase magicCaster, World world) {
+	public void castSpellFromWand(LivingEntity magicCaster, World world) {
 		if (this.wandType.equals(WandType.LOCAL) && world.isRemote) {
 			castStoredSpell();
 		} else if (this.wandType.equals(WandType.PROJECTILE)) {
-			world.spawnEntity(new EntityWandProjectile(world,
+			world.addEntity(new EntityWandProjectile(world,
 					magicCaster, this, false));
 		} else if (this.wandType.equals(WandType.RAY) && world.isRemote) {
-			RayTraceResult rayTrace = Minecraft.getMinecraft().getRenderViewEntity()
-					.rayTrace(300, 1.0f);
+			RayTraceResult rayTrace = Minecraft.getInstance().getRenderViewEntity().func_213324_a(300, 1.0f, false);
 			spellInterpreter.setupRayVariablesInPython(rayTrace);
 			castStoredSpell();
 		}
