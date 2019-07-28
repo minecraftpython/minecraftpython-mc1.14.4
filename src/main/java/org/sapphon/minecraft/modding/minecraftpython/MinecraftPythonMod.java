@@ -35,9 +35,6 @@ public class MinecraftPythonMod {
 	private void doSharedInit(final FMLCommonSetupEvent event)
 	{
 		if (isEnabled()) {
-			if(!ScriptLoaderConstants.resourcePathExists()){
-				ScriptLoaderConstants.setResourcePath(event);
-			}
 			serverCommandPacketChannel = NetworkRegistry.INSTANCE
 					.newSimpleChannel("MPServerCommand");
 			serverCommandPacketChannel.registerMessage(
@@ -53,6 +50,9 @@ public class MinecraftPythonMod {
 
 	private void doClientInit(final FMLClientSetupEvent event) {
 		if (isEnabled()) {
+			if(!ScriptLoaderConstants.resourcePathExists()){
+				ScriptLoaderConstants.setResourcePath(event);
+			}
 			FMLCommonHandler
 					.instance()
 					.bus()

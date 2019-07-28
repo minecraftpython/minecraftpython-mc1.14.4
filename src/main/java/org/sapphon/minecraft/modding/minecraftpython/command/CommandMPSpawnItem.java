@@ -1,6 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
@@ -57,7 +57,7 @@ public class CommandMPSpawnItem extends CommandMinecraftPythonServer {
 		WorldServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance()
 				.getWorld(0);// TODO ONLY WORKS IN OVERWORLD FOR NOW
 		Item item = ItemLookup.getItemByName(name, worldserver);
-		EntityItem entityWrapperForTheItemWithoutAHandToHoldIt = new EntityItem(worldserver, x, y, z);
+		ItemEntity entityWrapperForTheItemWithoutAHandToHoldIt = new ItemEntity(worldserver, x, y, z);
 		ItemStack theStack = new ItemStack(item, numberOfItemsToSpawn);
 		if(nbtData!=null){theStack.setTagCompound(nbtData);}
 		entityWrapperForTheItemWithoutAHandToHoldIt.setItem(theStack);

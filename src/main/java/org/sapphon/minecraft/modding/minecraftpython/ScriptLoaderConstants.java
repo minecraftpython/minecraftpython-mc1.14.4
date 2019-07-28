@@ -1,6 +1,10 @@
 package org.sapphon.minecraft.modding.minecraftpython;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.*;
 import org.apache.commons.io.FilenameUtils;
 import org.sapphon.minecraft.modding.base.JavaFileIOHelper;
 
@@ -25,7 +29,7 @@ public class ScriptLoaderConstants {
 		return RESOURCES_PATH != null && new File(RESOURCES_PATH).exists();
 	}
 
-	public static boolean setResourcePath(FMLPreInitializationEvent event){
+	public static boolean setResourcePath(FMLClientSetupEvent event){
 		if(new File(event.getModConfigurationDirectory().getAbsolutePath()).exists()){
 			RESOURCES_PATH = event.getModConfigurationDirectory().getAbsolutePath();
 			SCRIPTS_PATH = RESOURCES_PATH + File.separatorChar + "scripts";

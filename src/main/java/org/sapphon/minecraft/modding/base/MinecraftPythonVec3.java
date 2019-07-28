@@ -1,6 +1,6 @@
 package org.sapphon.minecraft.modding.base;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class MinecraftPythonVec3 {
@@ -9,7 +9,7 @@ public class MinecraftPythonVec3 {
 			 y=y2;
 			 z=z2;
 		 }
-		 public MinecraftPythonVec3(EntityPlayer player) {
+		 public MinecraftPythonVec3(PlayerEntity player) {
 			 this(player.posX,player.posY,player.posZ);
 		
 		 }

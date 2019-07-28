@@ -1,12 +1,15 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.item.*;
+import net.minecraft.entity.item.minecart.TNTMinecartEntity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.passive.horse.HorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.*;
 import net.minecraft.world.World;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
@@ -19,47 +22,47 @@ public class EntityLookup {
 
 	private static Map<String, Class> entityNameToClassMap = new HashMap<String, Class>() {
 		{
-			put("pig", EntityPig.class);
-			put("skeleton", EntitySkeleton.class);
-			put("horse", EntityHorse.class);
-			put("creeper", EntityCreeper.class);
-			put("cow", EntityCow.class);
-			put("chicken", EntityChicken.class);
-			put("bat", EntityBat.class);
-			put("arrow", EntityTippedArrow.class);
-			put("boat", EntityBoat.class);
-			put("endercrystal", EntityEnderCrystal.class);
-			put("largefireball", EntityLargeFireball.class);
-			put("smallfireball", EntitySmallFireball.class);
-			put("witherskull", EntityWitherSkull.class);
-			put("fireworkrocket", EntityFireworkRocket.class);
-			put("snowball", EntitySnowball.class);
-			put("egg", EntityEgg.class);
-			put("xporb", EntityXPOrb.class);
-			put("minecart_tnt", EntityMinecartTNT.class);
-			put("blaze", EntityBlaze.class);
-			put("wolf", EntityWolf.class);
-			put("ghast", EntityGhast.class);
-			put("spider", EntitySpider.class);
-			put("witch", EntityWitch.class);
-			put("iron_golem", EntityIronGolem.class);
-			put("zombie", EntityZombie.class);
-			put("squid", EntitySquid.class);
-			put("silverfish", EntitySilverfish.class);
-			put("slime", EntitySlime.class);
-			put("witherboss", EntityWither.class);
-			put("enderdragon", EntityDragon.class);
-			put("ocelot", EntityOcelot.class);
-			put("zombiepigman", EntityPigZombie.class);
-			put("enderman", EntityEnderman.class);
-			put("magmacube", EntityMagmaCube.class);
-			put("sheep", EntitySheep.class);
-			put("player", EntityPlayer.class);
+			put("pig", PigEntity.class);
+			put("skeleton", SkeletonEntity.class);
+			put("horse", HorseEntity.class);
+			put("creeper", CreeperEntity.class);
+			put("cow", CowEntity.class);
+			put("chicken", ChickenEntity.class);
+			put("bat", BatEntity.class);
+			put("arrow", ArrowEntity.class);
+			put("boat", BoatEntity.class);
+			put("endercrystal", EnderCrystalEntity.class);
+			put("largefireball", FireballEntity.class);
+			put("smallfireball", SmallFireballEntity.class);
+			put("witherskull", WitherSkullEntity.class);
+			put("fireworkrocket", FireworkRocketEntity.class);
+			put("snowball", SnowballEntity.class);
+			put("egg", EggEntity.class);
+			put("xporb", ExperienceOrbEntity.class);
+			put("minecart_tnt", TNTMinecartEntity.class);
+			put("blaze", BlazeEntity.class);
+			put("wolf", WolfEntity.class);
+			put("ghast", GhastEntity.class);
+			put("spider", SpiderEntity.class);
+			put("witch", WitchEntity.class);
+			put("iron_golem", IronGolemEntity.class);
+			put("zombie", ZombieEntity.class);
+			put("squid", SquidEntity.class);
+			put("silverfish", SilverfishEntity.class);
+			put("slime", SlimeEntity.class);
+			put("witherboss", WitherEntity.class);
+			put("enderdragon", EnderDragonEntity.class);
+			put("ocelot", OcelotEntity.class);
+			put("zombiepigman", ZombiePigmanEntity.class);
+			put("enderman", EndermanEntity.class);
+			put("magmacube", MagmaCubeEntity.class);
+			put("sheep", SheepEntity.class);
+			put("player", PlayerEntity.class);
 		}
 	};
 
 	public static Class getPlayerClass() {
-		return EntityPlayer.class;
+		return PlayerEntity.class;
 	}
 
 	private static Map<Class, String> classToEntityNameMap = new HashMap<Class, String>() {
@@ -78,7 +81,7 @@ public class EntityLookup {
 				return entityClass;
 			}
 		}
-		return EntityTNTPrimed.class;
+		return TNTEntity.class;
 	}
 
 	public static Entity getEntityByName(String name, World worldserver) {
@@ -92,11 +95,11 @@ public class EntityLookup {
 				Constructor constructor = entityClass
 						.getConstructor(World.class);
 				Object entityToSpawn = constructor.newInstance(worldserver);
-				if (entityToSpawn instanceof EntityXPOrb) {// TODO HAX: had to
+				if (entityToSpawn instanceof ExperienceOrbEntity) {// TODO HAX: had to
 															// add some xpValue
 															// to an xpOrb or it
 															// defaults to zero!
-					EntityXPOrb orb = (EntityXPOrb) entityToSpawn;
+					ExperienceOrbEntity orb = (ExperienceOrbEntity) entityToSpawn;
 					orb.xpValue = 5;
 					entityToSpawn = orb;
 				}
@@ -108,7 +111,7 @@ public class EntityLookup {
 			}
 
 		}
-		return new EntityTNTPrimed(worldserver);
+		return new TNTEntity(EntityType.TNT, worldserver);
 	}
 
 	public static String getNameByEntity(Entity entity) {

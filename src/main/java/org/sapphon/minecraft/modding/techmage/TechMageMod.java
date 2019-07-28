@@ -15,13 +15,8 @@ public class TechMageMod {
 	public static final String MODID = "techmage";
 	public static final String VERSION = "1.14.4-0.5.0";
 
-	@Mod.Instance(value = TechMageMod.MODID)
 	public static TechMageMod instance;
 
-	@SidedProxy(clientSide = "org.sapphon.minecraft.modding.base.ClientProxy", serverSide = "org.sapphon.minecraft.modding.base.CommonProxy")
-	public static CommonProxy proxy;
-
-	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		if (isEnabled()) {
@@ -39,15 +34,6 @@ public class TechMageMod {
 					}
 				}
 		}
-	}
-
-	@Mod.EventHandler
-	public void load(FMLInitializationEvent event) {
-		proxy.registerRenderers();
-	}
-
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
 	}
 
 	private boolean isEnabled() {

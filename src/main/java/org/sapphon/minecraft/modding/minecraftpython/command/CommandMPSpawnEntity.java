@@ -1,7 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,8 +54,8 @@ public class CommandMPSpawnEntity extends CommandMinecraftPythonServer {
 		entity.setPositionAndRotation(x, y, z, 0, 0);
 
 		// Tamed horse hack
-		if (entity instanceof EntityHorse) {
-			EntityHorse horse = (EntityHorse) entity;
+		if (entity instanceof HorseEntity) {
+			EntityHorse horse = (HorseEntity) entity;
 			horse.setHorseTamed(true);
 			horse.setHorseSaddled(true);
 		}

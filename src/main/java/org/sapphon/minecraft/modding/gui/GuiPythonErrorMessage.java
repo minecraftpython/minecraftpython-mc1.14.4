@@ -1,5 +1,6 @@
 package org.sapphon.minecraft.modding.gui;
 
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
@@ -9,8 +10,7 @@ import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblem
 import java.util.ArrayList;
 import java.util.List;
 
-@SideOnly(Side.CLIENT)
-public class GuiPythonErrorMessage extends GuiScreen {
+public class GuiPythonErrorMessage extends AbstractGui {
 	private int field_146444_f;
 	private static final String __OBFID = "CL_22715703";
 	private String[] messagesAsInput;

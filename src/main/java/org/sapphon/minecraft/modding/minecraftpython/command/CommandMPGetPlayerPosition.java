@@ -1,7 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 
 public class CommandMPGetPlayerPosition{
@@ -16,7 +16,7 @@ public class CommandMPGetPlayerPosition{
 	}
 	
 	public int[] execute(){
-		EntityPlayer player = getCorrectPlayer();
+		PlayerEntity player = getCorrectPlayer();
 		return new int[]{
 			(int)Math.round(player.posX),
 			(int)Math.round(player.posY + player.getEyeHeight()),

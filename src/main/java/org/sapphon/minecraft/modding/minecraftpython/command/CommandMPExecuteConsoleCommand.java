@@ -5,8 +5,8 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandNotFoundException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.EntitySelector;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -43,7 +43,7 @@ public class CommandMPExecuteConsoleCommand extends
 
 	@Override
 	public void doWork() {
-		EntityPlayer playerObject = getPlayerByName(playerName);
+		PlayerEntity playerObject = getPlayerByName(playerName);
         String[] astring = commandString.split(" ");
         String s1 = astring[0];
         astring = dropFirstString(astring);
@@ -60,15 +60,15 @@ public class CommandMPExecuteConsoleCommand extends
 
                 if (i > -1)
                 {
-                    EntityPlayerMP[] aentityplayermp = new EntityPlayerMP[0];
-                    aentityplayermp = EntitySelector.matchEntities(playerObject, astring[i], EntityPlayerMP.class).toArray(aentityplayermp);
+                    PlayerEntityMP[] aentityplayermp = new PlayerEntityMP[0];
+                    aentityplayermp = EntitySelector.matchEntities(playerObject, astring[i], PlayerEntityMP.class).toArray(aentityplayermp);
                     String s2 = astring[i];
-                    EntityPlayerMP[] aentityplayermp1 = aentityplayermp;
+                    PlayerEntityMP[] aentityplayermp1 = aentityplayermp;
                     int k = aentityplayermp.length;
 
                     for (int l = 0; l < k; ++l)
                     {
-                        EntityPlayerMP entityplayermp = aentityplayermp1[l];
+                        PlayerEntityMP entityplayermp = aentityplayermp1[l];
                         astring[i] = entityplayermp.getName();
 
                         try
@@ -97,7 +97,7 @@ public class CommandMPExecuteConsoleCommand extends
 
 	}
 
-	private EntityPlayer getPlayerByName(String name) {
+	private PlayerEntity getPlayerByName(String name) {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().getPlayerEntityByName(name);
 	}
 
