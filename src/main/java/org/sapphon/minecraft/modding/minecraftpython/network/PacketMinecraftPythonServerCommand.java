@@ -5,7 +5,8 @@ import org.sapphon.minecraft.modding.minecraftpython.command.*;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 //TODO this whole class requires a re-factor to be at all data-driven.  Right now everything is minimally automated and honestly kinda questionable technically
 public class PacketMinecraftPythonServerCommand {
-	public CommandMinecraftPythonServer command;
+
+	private CommandMinecraftPythonServer command;
 
 	public PacketMinecraftPythonServerCommand() {
 
@@ -56,6 +57,10 @@ public class PacketMinecraftPythonServerCommand {
 	public PacketBuffer toBytes(PacketBuffer buffer) {
 		buffer.writeString(command.serialize());
 		return buffer;
+	}
+
+	public CommandMinecraftPythonServer getCommand() {
+		return command;
 	}
 
 }
