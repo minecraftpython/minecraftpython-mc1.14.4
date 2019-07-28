@@ -26,8 +26,8 @@ public class ScriptLoaderConstants {
 	}
 
 	public static boolean setResourcePath(FMLClientSetupEvent event){
-		if(new File(event.getModConfigurationDirectory().getAbsolutePath()).exists()){
-			RESOURCES_PATH = event.getModConfigurationDirectory().getAbsolutePath();
+		if(getConfigDir(event).exists()){
+			RESOURCES_PATH = getConfigDir(event).getAbsolutePath();
 			SCRIPTS_PATH = RESOURCES_PATH + File.separatorChar + "scripts";
 			MINECRAFT_PROGRAMMING_PATH = SCRIPTS_PATH
 					+ File.separatorChar+"mp";
@@ -44,5 +44,9 @@ public class ScriptLoaderConstants {
 		else{
 			return false;
 		}
+	}
+
+	private static File getConfigDir(FMLClientSetupEvent event) {
+		return new File(event.getMinecraftSupplier().get().gameDir.getAbsolutePath() + File.separatorChar + "config");
 	}
 }
