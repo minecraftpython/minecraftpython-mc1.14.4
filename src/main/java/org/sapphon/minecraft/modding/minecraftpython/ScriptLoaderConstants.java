@@ -1,10 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython;
 
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.*;
 import org.apache.commons.io.FilenameUtils;
 import org.sapphon.minecraft.modding.base.JavaFileIOHelper;
 

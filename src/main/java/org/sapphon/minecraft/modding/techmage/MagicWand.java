@@ -11,7 +11,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.world.World;
 import org.sapphon.minecraft.modding.minecraftpython.IArcane;
 import org.sapphon.minecraft.modding.minecraftpython.ScriptLoaderConstants;

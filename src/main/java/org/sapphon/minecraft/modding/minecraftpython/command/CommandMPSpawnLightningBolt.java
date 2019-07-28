@@ -1,10 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 

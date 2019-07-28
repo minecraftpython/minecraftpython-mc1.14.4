@@ -1,6 +1,5 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 

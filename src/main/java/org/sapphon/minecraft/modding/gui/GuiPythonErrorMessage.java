@@ -3,8 +3,6 @@ package org.sapphon.minecraft.modding.gui;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 
 import java.util.ArrayList;

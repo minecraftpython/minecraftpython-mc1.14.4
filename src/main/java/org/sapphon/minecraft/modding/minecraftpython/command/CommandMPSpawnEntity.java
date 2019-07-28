@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
 

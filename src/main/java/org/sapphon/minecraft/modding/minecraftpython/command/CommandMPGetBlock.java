@@ -1,6 +1,5 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 
