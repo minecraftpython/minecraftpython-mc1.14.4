@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 
+import java.util.Optional;
+
 public class CommandMPGetPlayerPosition{
 	
 	private String nameOfPlayer = "";
@@ -23,18 +25,25 @@ public class CommandMPGetPlayerPosition{
 			(int)Math.round(player.posZ)
 		};
 	}
+
+	private PlayerEntity getPlayerEntityByName(String name){
+		PlayerEntity toReturn = Minecraft.getInstance().world.getPlayers().stream().filter((x) -> x.getDisplayName().getUnformattedComponentText().equals(this.nameOfPlayer)).findFirst().orElse(null);//Note this compares by getCommandSenderName whereas GameStart uses DisplayNames.  Never been a problem...yet.
+		if(toReturn == null){
+			JavaProblemHandler.printErrorMessageToDialogBox(new Exception("Problem finding player " + this.nameOfPlayer +  " by name.  Are you sure that player exists on this server?"));
+		}
+		return toReturn;
+	}
+
+	private boolean playerEntityByNameExists(String name){
+		return Minecraft.getInstance().world.getPlayers().stream().anyMatch((x) -> x.getDisplayName().getUnformattedComponentText().equals(this.nameOfPlayer));
+	}
 	
 	private PlayerEntity getCorrectPlayer() {
-		if(nameOfPlayer.equals("")){
+		if(nameOfPlayer.equals("") || this.playerEntityByNameExists(this.nameOfPlayer)){
 			 return Minecraft.getInstance().player;
 		}
 		else{
-			PlayerEntity possibleAnswer = Minecraft.getInstance().world.getPlayerEntityByName(nameOfPlayer);//Note this compares by getCommandSenderName whereas GameStart uses DisplayNames.  Never been a problem...yet.
-			if(possibleAnswer == null){
-				JavaProblemHandler.printErrorMessageToDialogBox(new Exception("Problem finding player " + this.nameOfPlayer +  " by name.  Are you sure that player exists on this server?"));
-				possibleAnswer = Minecraft.getInstance().player;	//this isn't great behavior; we're just returning the only player we know for sure we have.  TODO would be implementing a DoNothingPlayerEntity to return.
-			}
-			return possibleAnswer;
+			return getPlayerEntityByName(this.nameOfPlayer);
 		}
 	}
 }
