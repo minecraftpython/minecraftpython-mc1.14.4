@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.sapphon.minecraft.modding.base.ModConfigurationFlags;
 import org.sapphon.minecraft.modding.minecraftpython.command.*;
+import org.sapphon.minecraft.modding.minecraftpython.network.ChannelFactory;
 import org.sapphon.minecraft.modding.minecraftpython.spells.ThreadFactory;
 
 @Mod("minecraftpython")
@@ -36,13 +37,11 @@ public class MinecraftPythonMod {
 	private void doSharedInit(final FMLCommonSetupEvent event)
 	{
 		if (isEnabled()) {
-			serverCommandPacketChannel = NetworkRegistry.INSTANCE
-					.newSimpleChannel("MPServerCommand");
+			serverCommandPacketChannel = ChannelFactory.createChannel("MPServerCommand");
 			serverCommandPacketChannel.registerMessage(
 					PacketHandlerMinecraftPythonServerCommand.class,
 					PacketMinecraftPythonServerCommand.class, 0, Side.SERVER);
-			clientCommandPacketChannel = NetworkRegistry.INSTANCE
-					.newSimpleChannel("MPClientCommand");
+			clientCommandPacketChannel = ChannelFactory.createChannel("MPClientCommand");
 			clientCommandPacketChannel.registerMessage(
 					PacketHandlerMinecraftPythonClientCommand.class,
 					PacketMinecraftPythonClientCommand.class, 0, Side.CLIENT);
