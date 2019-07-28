@@ -1,6 +1,6 @@
 package org.sapphon.minecraft.modding.techmage;
 
-import net.minecraft.init.Items;
+import net.minecraft.item.Items;
 import org.apache.commons.io.FilenameUtils;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonCreativeTab;
 import org.sapphon.minecraft.modding.minecraftpython.ScriptLoaderConstants;

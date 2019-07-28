@@ -1,12 +1,10 @@
 package org.sapphon.minecraft.modding.minecraftpython;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MinecraftPythonCreativeTab extends CreativeTabs {
+public class MinecraftPythonCreativeTab extends ItemGroup {
 
 	private Item itemIcon;
 
@@ -16,8 +14,7 @@ public class MinecraftPythonCreativeTab extends CreativeTabs {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		return new ItemStack(itemIcon);
 	}
 }
