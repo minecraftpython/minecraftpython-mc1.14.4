@@ -15,7 +15,7 @@ public class CommandMPTeleport extends CommandMinecraftPythonServer {
 	public String teleportingPlayer;
 
 	public CommandMPTeleport(double x, double y, double z){
-		this(x,y,z, Minecraft.getInstance().player.getDisplayName().getUnformattedText());
+		this(x,y,z, Minecraft.getInstance().player.getDisplayName().getUnformattedComponentText());
 	}
 	
 	public CommandMPTeleport(double x, double y, double z, String teleportingPlayerDisplayName){
@@ -36,7 +36,7 @@ public class CommandMPTeleport extends CommandMinecraftPythonServer {
 		ServerWorld world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
 		List<PlayerEntity> players = new ArrayList<PlayerEntity>(world.playerEntities);
 		for (PlayerEntity entityPlayerMP : players) {
-			if(entityPlayerMP.getDisplayName().getUnformattedText().equals(teleportingPlayer)){
+			if(entityPlayerMP.getDisplayName().getUnformattedComponentText().equals(teleportingPlayer)){
 				entityPlayerMP.setPositionAndUpdate(x,y,z);
 				return;
 			}

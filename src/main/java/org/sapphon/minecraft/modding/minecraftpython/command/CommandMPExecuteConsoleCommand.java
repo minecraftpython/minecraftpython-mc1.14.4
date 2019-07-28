@@ -19,7 +19,7 @@ public class CommandMPExecuteConsoleCommand extends
 	
 	public CommandMPExecuteConsoleCommand(String commandText){
 		this.commandString = commandText;
-		this.playerName = Minecraft.getInstance().player.getDisplayName().getUnformattedText();
+		this.playerName = Minecraft.getInstance().player.getDisplayName().getUnformattedComponentText();
 	}
 	
 	public CommandMPExecuteConsoleCommand(String[] commandAndArgsToDeserialize) {
