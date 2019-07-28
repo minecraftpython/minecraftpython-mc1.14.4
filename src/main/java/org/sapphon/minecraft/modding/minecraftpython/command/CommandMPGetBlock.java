@@ -21,6 +21,6 @@ public class CommandMPGetBlock {
 		this((int)x,(int)y,(int)z);
 	}
 	public String execute() {
-		return Minecraft.getInstance().world.getBlockState(new BlockPos(x, y, z)).getBlock().getRegistryName().getResourcePath();
+		return Minecraft.getInstance().world.getBlockState(new BlockPos(x, y, z)).getBlock().getRegistryName().getPath();
 	}
 }

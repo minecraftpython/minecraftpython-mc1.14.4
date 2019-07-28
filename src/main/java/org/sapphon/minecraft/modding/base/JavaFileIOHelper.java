@@ -78,7 +78,7 @@ public class JavaFileIOHelper {
 						.getInputStream();
 				if (locationInputStream != null) {
 					FileUtils.copyInputStreamToFile(locationInputStream,
-							new File(ScriptLoaderConstants.RESOURCES_PATH + File.separator + location.getResourcePath()));
+							new File(ScriptLoaderConstants.RESOURCES_PATH + File.separator + location.getPath()));
 				} else {
 					throw new Exception() {};
 				}
