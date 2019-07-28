@@ -1,13 +1,12 @@
-package org.sapphon.minecraft.modding.minecraftpython.command;
+package org.sapphon.minecraft.modding.minecraftpython.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import org.sapphon.minecraft.modding.minecraftpython.command.*;
 import org.sapphon.minecraft.modding.minecraftpython.problemhandlers.JavaProblemHandler;
 //TODO this whole class requires a re-factor to be at all data-driven.  Right now everything is minimally automated and honestly kinda questionable technically
-public class PacketMinecraftPythonServerCommand implements IMessage {
-	
-
+public class PacketMinecraftPythonServerCommand {
 	private String commandName;
 	public CommandMinecraftPythonServer command;
 

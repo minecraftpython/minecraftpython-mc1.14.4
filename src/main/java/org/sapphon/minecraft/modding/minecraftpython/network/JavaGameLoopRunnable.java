@@ -1,4 +1,4 @@
-package org.sapphon.minecraft.modding.minecraftpython;
+package org.sapphon.minecraft.modding.minecraftpython.network;
 
 import org.sapphon.minecraft.modding.minecraftpython.command.SpellInterpreter;
 import org.sapphon.minecraft.modding.minecraftpython.web.GameStartHttpPostHandler;

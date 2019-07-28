@@ -1,6 +1,6 @@
 package org.sapphon.minecraft.modding.minecraftpython.spells;
 
-import org.sapphon.minecraft.modding.minecraftpython.JavaGameLoopRunnable;
+import org.sapphon.minecraft.modding.minecraftpython.network.JavaGameLoopRunnable;
 import org.sapphon.minecraft.modding.minecraftpython.command.SpellInterpreter;
 
 

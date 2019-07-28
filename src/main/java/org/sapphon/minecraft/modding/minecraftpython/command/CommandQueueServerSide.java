@@ -2,6 +2,7 @@ package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
+import org.sapphon.minecraft.modding.minecraftpython.network.PacketMinecraftPythonClientCommand;
 
 import java.util.ArrayList;
 

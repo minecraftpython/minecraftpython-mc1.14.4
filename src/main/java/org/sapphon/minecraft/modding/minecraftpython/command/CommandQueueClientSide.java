@@ -1,6 +1,7 @@
 package org.sapphon.minecraft.modding.minecraftpython.command;
 
 import org.sapphon.minecraft.modding.minecraftpython.MinecraftPythonMod;
+import org.sapphon.minecraft.modding.minecraftpython.network.PacketMinecraftPythonServerCommand;
 
 import java.util.ArrayList;
 
